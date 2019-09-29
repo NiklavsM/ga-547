@@ -2,9 +2,8 @@ import java.util.*;
 
 public class GeneticAlgorithm {
     private final int populationSize = 100;
-    private final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz !.?";
+    //    private final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz !.?";
     private final String goalString = "Welcome to CS547!";
-    private final double chanceOfMutation = 0.01;
     private int generationCount = 0;
     private ArrayList<String> population;
     private ArrayList<String> matingPool;
@@ -24,8 +23,6 @@ public class GeneticAlgorithm {
             population.forEach(s -> rankedPop.put(s, fitnessFunction(s)));
             generateMatingPool(rankedPop);
             generateNewPopulation();
-
-            System.out.println("Best so far: " + bestMatch);
         }
         System.out.println("Fond string: \"" + bestMatch + "\" in generation: " + generationCount);
     }
@@ -36,6 +33,7 @@ public class GeneticAlgorithm {
             if (fitnessScore > bestScore) {
                 bestScore = fitnessScore;
                 bestMatch = s;
+                System.out.println("Best so far: " + bestMatch);
             }
             if (fitnessScore == goalString.length()) return true;
         }
@@ -59,7 +57,7 @@ public class GeneticAlgorithm {
             String parentA = matingPool.get(rg.nextInt(matingPool.size()));
             String parentB = matingPool.get(rg.nextInt(matingPool.size()));
             for (int k = 0; k < goalString.length(); k++) {
-                if (rg.nextInt(100) == 99) {
+                if (rg.nextInt(100) == 1) { // 1 in 100 chance of mutation
                     offspring.append(goalString.charAt(rg.nextInt(goalString.length())));
                 } else {
                     if (k < goalString.length() / 2) {
@@ -84,13 +82,7 @@ public class GeneticAlgorithm {
             }
             population.add(sb.toString());
         }
-//        population.forEach(p -> System.out.println(p + fitnessFunction(p)));
         return population;
-    }
-
-    private ArrayList<String> createNewGeneration(ArrayList<String> parents) {
-        ArrayList<String> newGeneration = new ArrayList<>();
-        return newGeneration;
     }
 
     private int fitnessFunction(String candidate) {
