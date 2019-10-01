@@ -1,17 +1,21 @@
 import java.util.*;
 
 public class GeneticAlgorithm {
-    private final int populationSize = 100;
+    private final int populationSize = 400;
     //    private final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz !.?";
     private final String goalString = "Welcome to CS547!";
-    private int generationCount = 0;
+    private int generationCount;
     private ArrayList<String> population;
     private ArrayList<String> matingPool;
     private Random rg = new Random();
-    private String bestMatch = "";
-    private int bestScore = 0;
+    private String bestMatch;
+    private int bestScore;
 
     public GeneticAlgorithm() {
+        int total = 0;
+        bestMatch = "";
+        bestScore = 0;
+        generationCount = 0;
         population = getInitialPopulation();
         evolve();
     }
@@ -33,7 +37,7 @@ public class GeneticAlgorithm {
             if (fitnessScore > bestScore) {
                 bestScore = fitnessScore;
                 bestMatch = s;
-                System.out.println("Best so far: " + bestMatch);
+                System.out.println("Best so far: " + bestMatch + " Fitness score: " + fitnessScore + " Generation: " + generationCount);
             }
             if (fitnessScore == goalString.length()) return true;
         }
