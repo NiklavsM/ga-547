@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class GeneticAlgorithm {
-    private final int populationSize = 400;
-    //    private final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz !.?";
+    private final int populationSize = 300;
+    private final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz !.?";
     private final String goalString = "Welcome to CS547!";
     private int generationCount;
     private ArrayList<String> population;
@@ -12,7 +12,6 @@ public class GeneticAlgorithm {
     private int bestScore;
 
     public GeneticAlgorithm() {
-        int total = 0;
         bestMatch = "";
         bestScore = 0;
         generationCount = 0;
@@ -49,7 +48,9 @@ public class GeneticAlgorithm {
         matingPool = new ArrayList<>();
         rankedPop.forEach((dna, rank) -> {
             for (int i = 0; i < rank; i++) {
-                matingPool.add(dna);
+                if (rank > bestScore - 1) { // allow only best to enter the pool, also make sure that the best one has the best chance to mate
+                    matingPool.add(dna);
+                }
             }
         });
     }
@@ -62,7 +63,7 @@ public class GeneticAlgorithm {
             String parentB = matingPool.get(rg.nextInt(matingPool.size()));
             for (int k = 0; k < goalString.length(); k++) {
                 if (rg.nextInt(100) == 1) { // 1 in 100 chance of mutation
-                    offspring.append(goalString.charAt(rg.nextInt(goalString.length())));
+                    offspring.append(characters.charAt(rg.nextInt(characters.length())));
                 } else {
                     if (k < goalString.length() / 2) {
                         offspring.append(parentA.charAt(k));
@@ -82,7 +83,7 @@ public class GeneticAlgorithm {
         for (int i = 0; i < populationSize; i++) {
             StringBuilder sb = new StringBuilder();
             for (int k = 0; k < goalString.length(); k++) {
-                sb.append(goalString.charAt(rg.nextInt(goalString.length())));
+                sb.append(characters.charAt(rg.nextInt(characters.length())));
             }
             population.add(sb.toString());
         }

@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public class RandomAlgorithm {
+    private final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz !.?";
     private final String goalString = "Welcome to CS547!";
     private Random rg = new Random();
 
@@ -18,9 +19,9 @@ public class RandomAlgorithm {
 
     private String generateRandomString() {
         StringBuilder sb = new StringBuilder();
-        int goalStringLength = goalString.length();
-        for (int i = 0; i < goalStringLength; i++) {
-            sb.append(goalString.charAt(rg.nextInt(goalStringLength)));
+        int charactersLength = characters.length();
+        for (int i = 0; i < charactersLength; i++) {
+            sb.append(characters.charAt(rg.nextInt(charactersLength)));
         }
         return sb.toString();
 
